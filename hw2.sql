@@ -196,7 +196,8 @@ JOIN
 JOIN
     courses ON student_courses.course_id = courses.id
 ORDER BY
-    students.id, courses.name;
+    students.id, courses.name
+LIMIT 200;
     
 -- Студенты, у которых средняя оценка по курсам выше, чем у любого другого студента в их группе:
 SELECT
@@ -232,7 +233,8 @@ HAVING
             students_2.id
     )
 ORDER BY
-    students.group_id, students.id;
+    students.group_id, students.id
+LIMIT 100;
     
 -- 4. Подсчитать количество студентов на каждом курсе.
 -- Найти среднюю оценку на каждом курсе.
@@ -241,11 +243,13 @@ ORDER BY
 SELECT course_id, COUNT(*) AS count_of_students
 FROM student_courses
 GROUP BY course_id
-ORDER BY course_id;
+ORDER BY course_id
+LIMIT 30;
 
 -- Найдем среднюю оценку на каждом курсе.
 SELECT course_id, courses.name, AVG(grade) AS average_grade
 FROM course_grades
 JOIN courses ON course_grades.course_id = courses.id
 GROUP BY course_id, courses.name
-ORDER BY course_id;
+ORDER BY course_id
+LIMIT 10;

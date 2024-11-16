@@ -65,7 +65,7 @@ VALUES
 ('Информатика', FALSE, 70, 100),
 ('ОБЖ', FALSE, 40, 100);
 
-SELECT * FROM courses;
+SELECT * FROM courses LIMIT 10;
 
 
 INSERT INTO groups (full_name, short_name, students_ids)
@@ -75,7 +75,7 @@ VALUES
 ('Группа В', 'B', '{}'),
 ('Группа Г', 'Г', '{5, 6, 7}');
 
-SELECT * FROM groups;
+SELECT * FROM groups LIMIT 5;
 
 INSERT INTO students (first_name, last_name, group_id, courses_ids)
 VALUES
@@ -100,7 +100,7 @@ VALUES
 ('Светлана', 'Горбунова', 3, '{1, 2, 6}'),
 ('Максим', 'Королев', 4, '{1, 3, 7}');
 
-SELECT * FROM students;
+SELECT * FROM students LIMIT 20;
 
 INSERT INTO course_grades (course_id, student_id, grade, grade_str)
 VALUES
@@ -125,7 +125,7 @@ VALUES
 (1, 19, 67, 'D'),
 (1, 20, 60, 'F');
 
-SELECT * FROM course_grades;
+SELECT * FROM course_grades LIMIT 20;
 
 -- Проверим, что триггер срабатывает, и мы не можем в таблицу course_grades ввести значение оценки,
 -- не попадающей в диапазон [min_grade,max_grade]
@@ -159,7 +159,8 @@ JOIN
 WHERE
     course_grades.course_id = 1
 ORDER BY
-    course_grades.grade DESC;
+    course_grades.grade DESC
+LIMIT 20;
    
 -- Посчитаем количество студентов в каждой группе и отсортируем по возрастанию номера группы:
 SELECT
@@ -173,7 +174,8 @@ JOIN
 GROUP BY
     group_id, group_name
 ORDER BY
-    group_id ASC;
+    group_id ASC
+LIMIT 10;
 
 -- Посчитаем другим способом:
 SELECT
@@ -196,7 +198,8 @@ FROM
 WHERE
     group_id = 1
 ORDER BY
-    array_length(courses_ids, 1) DESC;
+    array_length(courses_ids, 1) DESC
+LIMIT 20;
 
 
 --Выберем студентов с оценкой A по математике и отсортируем от большего балла к меньшему:
@@ -214,7 +217,8 @@ JOIN
 WHERE
     course_grades.course_id = 1 AND course_grades.grade_str = 'A'
 ORDER BY
-    course_grades.grade DESC;
+    course_grades.grade DESC
+LIMIT 20;
 
 -- Выведем название предмета, номер группы, имя, фамилию студента, который его посещает. Отсортируем сначала по названию предмета,
 -- затем по группе, затем по фамилии и по имени студента.
@@ -240,4 +244,5 @@ ORDER BY
     courses.name,
     expanded_courses.group_id,
     expanded_courses.last_name,
-    expanded_courses.first_name;
+    expanded_courses.first_name
+LIMIT 100;
